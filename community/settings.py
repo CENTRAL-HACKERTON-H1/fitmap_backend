@@ -46,16 +46,19 @@ INSTALLED_APPS = [
     'django_filters',
     "board",
     "member",
+
     #rest framework 관련
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
+
 	#dj-rest-auth 관련
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    
     # simple-jwt 관련
     'rest_framework_simplejwt',
     'corsheaders',
