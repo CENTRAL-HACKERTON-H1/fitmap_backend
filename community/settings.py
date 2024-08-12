@@ -22,7 +22,6 @@ pymysql.install_as_MySQLdb()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -33,7 +32,6 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = ['43.201.162.111', 'fitmap.store', '127.0.0.1']
-
 
 # Application definition
 
@@ -60,8 +58,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # simple-jwt 관련
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -79,7 +77,10 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
     "http://localhost:5173",
-    "http://fitmap.store"]
+    "http://localhost:5174",
+    "https://fitmap.store",
+    "https://main--fitmapstore.netlify.app"
+    ]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -103,7 +104,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "community.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -117,7 +117,6 @@ DATABASES = {
         'PORT': 3306,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -137,7 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -148,7 +146,6 @@ TIME_ZONE = "Asia/Seoul"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -199,15 +196,25 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE_ENFORCE_CSRF_ON_UNAUTHENTICATED': False,
 }
 
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 30,
 }
 
-ACCOUNT_EMAIL_VERIFICATION = 'none' # 이 부분
-ACCOUNT_EMAIL_REQUIRED = False # 이 부분
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
+
+ACCOUNT_EMAIL_VERIFICATION = 'none' 
+ACCOUNT_EMAIL_REQUIRED = False 
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
